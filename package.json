@@ -1,0 +1,20 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "test": "node -r dotenv-override-true/config -r @babel/register index.js"
+  },
+  "dependencies": {
+    "@ringcentral/sdk": "^4.0.0-alpha.7",
+    "dotenv-override-true": "^6.2.0",
+    "ringcentral-softphone": "^0.1.0",
+    "wrtc": "^0.4.2",
+    "ws": "^7.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/register": "^7.6.0",
+    "standard": "^14.3.0",
+    "yarn-upgrade-all": "^0.5.2"
+  }
+}
