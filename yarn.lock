@@ -885,6 +885,11 @@ core-js-compat@^3.1.1:
     browserslist "^4.6.6"
     semver "^6.3.0"
 
+core-js@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.2.1.tgz#cd41f38534da6cc59f7db050fe67307de9868b09"
+  integrity sha512-Qa5XSVefSVPRxy2XfUC13WbvqkxhkwB3ve+pgCQveNgYzbM/UxZeu1dcOX/xr4UmfUd+muuvsaxilQzCyUurMw==
+
 core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -2274,10 +2279,10 @@ rimraf@^2.6.1:
   dependencies:
     glob "^7.1.3"
 
-ringcentral-softphone@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/ringcentral-softphone/-/ringcentral-softphone-0.1.0.tgz#e4ae1de646d8824bff1150a3b0811f7d416cb9a1"
-  integrity sha512-Ix2rsTYcEhUiazxi21a9UesmUXvlP7txKbRNbPsIz/DCLL0ClQQyFOuD4oIukSERImZPRHLN64qNgLOT2PUHJw==
+ringcentral-softphone@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/ringcentral-softphone/-/ringcentral-softphone-0.1.4.tgz#66dbd0ce1ffc6276a17814ed9e124c8ea23eff82"
+  integrity sha512-6E9U76VbM1YfxqKI0oEXtN5gBnBTIqQdYK3hxTuJyB07TsMts2P+dK/bl1iqgCEIPhH+e9V3Fxu0CaJekNfM7g==
   dependencies:
     blueimp-md5 "^2.12.0"
     isomorphic-webrtc "^0.1.0"
