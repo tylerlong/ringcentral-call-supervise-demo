@@ -44,4 +44,4 @@ Watch the console output of `yarn supervisor`, you should see something like `li
 play -b 16 -e signed -c 1 -r 8000 audio.raw
 ```
 
-The audio content should be the incoming call to `RINGCENTRAL_AGENT_EXT`.
+The audio content should be same as the incoming call to `RINGCENTRAL_AGENT_EXT` we made about.
