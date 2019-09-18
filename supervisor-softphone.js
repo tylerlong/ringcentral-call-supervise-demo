@@ -19,6 +19,7 @@ const rc = new RingCentral({
   })
   const softphone = new Softphone(rc)
   await softphone.register()
+  fs.writeFileSync('temp.txt', softphone.device.id)
   await rc.logout() // rc is no longer needed
 
   let audioSink
@@ -33,6 +34,7 @@ const rc = new RingCentral({
       audioSink = new RTCAudioSink(e.track)
       audioStream = fs.createWriteStream(audioPath, { flags: 'a' })
       audioSink.ondata = data => {
+        // console.log(data)
         audioStream.write(Buffer.from(data.samples.buffer))
       }
     })
