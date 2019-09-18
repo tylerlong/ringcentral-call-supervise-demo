@@ -34,7 +34,7 @@ const rc = new RingCentral({
       audioSink = new RTCAudioSink(e.track)
       audioStream = fs.createWriteStream(audioPath, { flags: 'a' })
       audioSink.ondata = data => {
-        // console.log(data)
+        console.log(`live audio data received, sample rate is ${data.sampleRate}`)
         audioStream.write(Buffer.from(data.samples.buffer))
       }
     })

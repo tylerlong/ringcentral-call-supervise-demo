@@ -5,7 +5,13 @@
 
 ```
 yarn install
+cp .env.sample .env
 ```
+
+Edit `.env` to specify credentials.
+
+ - `RINGCENTRAL_USERNAME` is the supervisor
+ - `RINGCENTRAL_AGENT_EXT` is the extension number to be supervised, such as `116`
 
 
 ## Run

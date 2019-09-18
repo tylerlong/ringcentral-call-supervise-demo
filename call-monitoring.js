@@ -17,14 +17,17 @@ const rc = new RingCentral(
     password: process.env.RINGCENTRAL_PASSWORD
   })
 
-  // 590490017 is for ext 116
-  const pubnub = new PubNub(rc, ['/restapi/v1.0/account/~/extension/590490017/telephony/sessions'], async message => {
+  const r = await rc.get('/restapi/v1.0/account/~/extension')
+  const agentExt = r.data.records.filter(ext => ext.extensionNumber === process.env.RINGCENTRAL_AGENT_EXT)[0]
+  console.log(agentExt)
+
+  const pubnub = new PubNub(rc, [`/restapi/v1.0/account/~/extension/${agentExt.id}/telephony/sessions`], async message => {
     // console.log(JSON.stringify(message, null, 2))
     if (message.body.parties.some(p => p.status.code === 'Answered' && p.direction === 'Inbound')) {
       const r = await rc.post(`/restapi/v1.0/account/~/telephony/sessions/${message.body.telephonySessionId}/supervise`, {
         mode: 'Listen',
         supervisorDeviceId: deviceId,
-        agentExtensionNumber: '116'
+        agentExtensionNumber: agentExt.extensionNumber
       })
       console.log(r.data)
     }
