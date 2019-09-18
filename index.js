@@ -1,4 +1,5 @@
 import RingCentral from '@ringcentral/sdk'
+import Subscriptions from '@ringcentral/subscriptions'
 import fs from 'fs'
 import { nonstandard } from 'wrtc'
 import Softphone from 'ringcentral-softphone'
@@ -19,8 +20,6 @@ const rc = new RingCentral({
   })
   const softphone = new Softphone(rc)
   await softphone.register()
-  fs.writeFileSync('temp.txt', softphone.device.id)
-  await rc.logout() // rc is no longer needed
 
   let audioSink
   let audioStream
@@ -43,4 +42,26 @@ const rc = new RingCentral({
     audioSink.stop()
     audioStream.end()
   })
+
+  const r = await rc.get('/restapi/v1.0/account/~/extension')
+  const json = await r.json()
+  const agentExt = json.records.filter(ext => ext.extensionNumber === process.env.RINGCENTRAL_AGENT_EXT)[0]
+  const subscriptions = new Subscriptions({
+    sdk: rc
+  })
+  const subscription = subscriptions.createSubscription({
+    pollInterval: 10 * 1000,
+    renewHandicapMs: 2 * 60 * 1000
+  })
+  subscription.setEventFilters([`/restapi/v1.0/account/~/extension/${agentExt.id}/telephony/sessions`])
+  subscription.on(subscription.events.notification, async function (message) {
+    if (message.body.parties.some(p => p.status.code === 'Answered' && p.direction === 'Inbound')) {
+      await rc.post(`/restapi/v1.0/account/~/telephony/sessions/${message.body.telephonySessionId}/supervise`, {
+        mode: 'Listen',
+        supervisorDeviceId: softphone.device.id,
+        agentExtensionNumber: agentExt.extensionNumber
+      })
+    }
+  })
+  await subscription.register()
 })()

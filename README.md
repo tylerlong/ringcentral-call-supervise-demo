@@ -1,6 +1,5 @@
 # RingCentral call supervise demo
 
-
 ## Setup
 
 ```
@@ -17,28 +16,23 @@ Edit `.env` to specify credentials.
 ## Run
 
 ```
-yarn supervisor
+yarn server
 ```
-
-Command above create a softphone, which will be used as the supervisor's RingCentral device.
-
-
-```
-yarn monitor
-```
-
-Command above will setup a monitor, whenever there is phone call ongoing, supervise API will be invoked to setup the supervision.
-
 
 
 ## Test
 
 Make a incoming call to `RINGCENTRAL_AGENT_EXT`, answer it, talk via the phone call.
 
-Watch the console output of `yarn supervisor`, you should see something like `live audio data received, sample rate is 8000`.
+Watch the console output, you should see something like `live audio data received, sample rate is 8000`.
 
 
-## Play the saved audio
+## Check the saved audio
+
+We got audio data in real time. We could have done something more meaningful with the data.
+But for this demo we simply append the data to an audio file `audio.raw`.
+
+You can play the saved audio by:
 
 ```
 play -b 16 -e signed -c 1 -r 8000 audio.raw

@@ -1,8 +1,7 @@
 {
   "license": "MIT",
   "scripts": {
-    "supervisor": "node -r dotenv-override-true/config -r @babel/register supervisor-softphone.js",
-    "monitor": "node -r dotenv-override-true/config -r @babel/register call-monitoring.js"
+    "server": "node -r dotenv-override-true/config -r @babel/register index.js"
   },
   "dependencies": {
     "@ringcentral/sdk": "^4.0.0-alpha.7",
