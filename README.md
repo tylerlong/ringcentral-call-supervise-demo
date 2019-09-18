@@ -33,6 +33,9 @@ Command above will setup a monitor, whenever there is phone call ongoing, superv
 
 ## Test
 
+Make a incoming call to `RINGCENTRAL_AGENT_EXT`, answer it, talk via the phone call.
+
+Watch the console output of `yarn supervisor`, you should see something like `live audio data received, sample rate is 8000`.
 
 
 ## Play the saved audio
@@ -40,3 +43,5 @@ Command above will setup a monitor, whenever there is phone call ongoing, superv
 ```
 play -b 16 -e signed -c 1 -r 8000 audio.raw
 ```
+
+The audio content should be the incoming call to `RINGCENTRAL_AGENT_EXT`.
