@@ -4,8 +4,6 @@ import fs from 'fs'
 import { nonstandard } from 'wrtc'
 import Softphone from 'ringcentral-softphone'
 
-const { RTCAudioSink } = nonstandard
-
 const rc = new RingCentral({
   server: process.env.RINGCENTRAL_SERVER_URL,
   clientId: process.env.RINGCENTRAL_CLIENT_ID,
@@ -28,19 +26,19 @@ const rc = new RingCentral({
     fs.unlinkSync(audioPath)
   }
   softphone.on('INVITE', sipMessage => {
-    softphone.answer()
+    softphone.answer(sipMessage)
     softphone.on('track', e => {
-      audioSink = new RTCAudioSink(e.track)
+      audioSink = new nonstandard.RTCAudioSink(e.track)
       audioStream = fs.createWriteStream(audioPath, { flags: 'a' })
       audioSink.ondata = data => {
         console.log(`live audio data received, sample rate is ${data.sampleRate}`)
         audioStream.write(Buffer.from(data.samples.buffer))
       }
+      softphone.on('BYE', () => {
+        audioSink.stop()
+        audioStream.end()
+      })
     })
-  })
-  softphone.on('BYE', () => {
-    audioSink.stop()
-    audioStream.end()
   })
 
   const r = await rc.get('/restapi/v1.0/account/~/extension')
