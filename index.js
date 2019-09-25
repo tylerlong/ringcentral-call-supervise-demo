@@ -1,6 +1,6 @@
 import RingCentral from '@ringcentral/sdk'
 import Subscriptions from '@ringcentral/subscriptions'
-import fs from 'fs'
+import Speaker from 'speaker'
 import { nonstandard } from 'wrtc'
 import Softphone from 'ringcentral-softphone'
 
@@ -19,24 +19,26 @@ const rc = new RingCentral({
   const softphone = new Softphone(rc)
   await softphone.register()
 
-  let audioSink
-  let audioStream
-  const audioPath = 'audio.raw'
-  if (fs.existsSync(audioPath)) {
-    fs.unlinkSync(audioPath)
-  }
   softphone.on('INVITE', sipMessage => {
     softphone.answer(sipMessage)
-    softphone.on('track', e => {
-      audioSink = new nonstandard.RTCAudioSink(e.track)
-      audioStream = fs.createWriteStream(audioPath, { flags: 'a' })
+    softphone.once('track', e => {
+      const audioSink = new nonstandard.RTCAudioSink(e.track)
+      let speaker = null
+      let prevSampleRate = null
       audioSink.ondata = data => {
-        console.log(`live audio data received, sample rate is ${data.sampleRate}`)
-        audioStream.write(Buffer.from(data.samples.buffer))
+        console.log('live audio data received', data.sampleRate)
+        if (speaker === null) {
+          if (data.sampleRate === prevSampleRate) { // wait until sample rate stable
+            speaker = new Speaker({ channels: data.channelCount, bitDepth: data.bitsPerSample, sampleRate: 8000, signed: true })
+          }
+          prevSampleRate = data.sampleRate
+        } else {
+          speaker.write(Buffer.from(data.samples.buffer))
+        }
       }
-      softphone.on('BYE', () => {
+      softphone.once('BYE', () => {
         audioSink.stop()
-        audioStream.end()
+        speaker.close()
       })
     })
   })
