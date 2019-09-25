@@ -26,16 +26,4 @@ Make a incoming call to `RINGCENTRAL_AGENT_EXT`, answer it, talk via the phone c
 
 Watch the console output, you should see something like `live audio data received, sample rate is 8000`.
 
-
-## Check the saved audio
-
-We got audio data in real time. We could have done something more meaningful with the data.
-But for this demo we simply append the data to an audio file `audio.raw`.
-
-You can play the saved audio by:
-
-```
-play -b 16 -e signed -c 1 -r 8000 audio.raw
-```
-
-The audio content should be same as the incoming call to `RINGCENTRAL_AGENT_EXT` we made.
+The audio will also be played by your speaker.
