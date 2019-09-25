@@ -7,16 +7,16 @@
     "@ringcentral/sdk": "^4.0.0-alpha.7",
     "@ringcentral/subscriptions": "^4.0.0-alpha.7",
     "dotenv-override-true": "^6.2.0",
-    "ringcentral-softphone": "^0.1.6",
+    "ringcentral-softphone": "^0.3.3",
     "wrtc": "^0.4.2",
     "ws": "^7.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
-    "@babel/register": "^7.6.0",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/register": "^7.6.2",
     "core-js": "^3.2.1",
-    "standard": "^14.3.0",
+    "standard": "^14.3.1",
     "yarn-upgrade-all": "^0.5.2"
   }
 }
