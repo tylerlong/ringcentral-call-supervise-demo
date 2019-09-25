@@ -1,5 +1,8 @@
 # RingCentral call supervise demo
 
+Article: [Automatically superevise your call agents](https://medium.com/ringcentral-developers/automatically-supervise-your-call-agents-78c0cd7caf7f)
+
+
 ## Setup
 
 ```
