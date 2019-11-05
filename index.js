@@ -3,6 +3,7 @@ import Subscriptions from '@ringcentral/subscriptions'
 import Speaker from 'speaker'
 import { nonstandard } from 'wrtc'
 import Softphone from 'ringcentral-softphone'
+import fs from 'fs'
 
 const rc = new RingCentral({
   server: process.env.RINGCENTRAL_SERVER_URL,
@@ -25,6 +26,11 @@ const rc = new RingCentral({
       const audioSink = new nonstandard.RTCAudioSink(e.track)
       let speaker = null
       let prevSampleRate = null
+      const audioFilePath = 'call.raw'
+      if (fs.existsSync(audioFilePath)) {
+        fs.unlinkSync(audioFilePath)
+      }
+      const writeStream = fs.createWriteStream(audioFilePath, { flags: 'a' })
       audioSink.ondata = data => {
         console.log('live audio data receivedlive audio data received, sample rate is', data.sampleRate)
         if (speaker === null) {
@@ -34,6 +40,7 @@ const rc = new RingCentral({
           prevSampleRate = data.sampleRate
         } else {
           speaker.write(Buffer.from(data.samples.buffer))
+          writeStream.write(Buffer.from(data.samples.buffer))
         }
       }
       softphone.once('BYE', () => {
