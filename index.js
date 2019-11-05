@@ -29,7 +29,7 @@ const rc = new RingCentral({
         console.log('live audio data receivedlive audio data received, sample rate is', data.sampleRate)
         if (speaker === null) {
           if (data.sampleRate === prevSampleRate) { // wait until sample rate stable
-            speaker = new Speaker({ channels: data.channelCount, bitDepth: data.bitsPerSample, sampleRate: 8000, signed: true })
+            speaker = new Speaker({ channels: data.channelCount, bitDepth: data.bitsPerSample, sampleRate: data.sampleRate, signed: true })
           }
           prevSampleRate = data.sampleRate
         } else {
